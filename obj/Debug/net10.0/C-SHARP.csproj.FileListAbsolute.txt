@@ -1,0 +1,5 @@
+C:\Users\Vijay D V\OneDrive\Desktop\C-SHARP\obj\Debug\net10.0\C-SHARP.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Vijay D V\OneDrive\Desktop\C-SHARP\obj\Debug\net10.0\C-SHARP.AssemblyInfoInputs.cache
+C:\Users\Vijay D V\OneDrive\Desktop\C-SHARP\obj\Debug\net10.0\C-SHARP.AssemblyInfo.cs
+C:\Users\Vijay D V\OneDrive\Desktop\C-SHARP\obj\Debug\net10.0\C-SHARP.csproj.CoreCompileInputs.cache
+C:\Users\Vijay D V\OneDrive\Desktop\C-SHARP\obj\Debug\net10.0\C-SHARP.sourcelink.json
