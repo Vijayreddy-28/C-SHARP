@@ -7,6 +7,7 @@ class Student
     public string Name { get; set; }
     public int Grade { get; set; }
     public int Age { get; set; }
+    public string Gender { get; set; }
 }
 
 class Program
@@ -42,7 +43,7 @@ class Program
         var topStudents = students
         .OrderByDescending(s => s.Grade)
         .Take(3);
-
+        Console.WriteLine("top 3 students");
         foreach (var s in topStudents)
         {
         Console.WriteLine($"{s.Name} - {s.Grade}");
