@@ -37,5 +37,24 @@ class Program
         {
             Console.WriteLine($"Name: {student.Name}, Grade: {student.Grade}, Age: {student.Age}");
         }
+
+
+        var topStudents = students
+        .OrderByDescending(s => s.Grade)
+        .Take(3);
+
+        foreach (var s in topStudents)
+        {
+        Console.WriteLine($"{s.Name} - {s.Grade}");
+        }
+
+        var result = students
+        .Where(s => s.Grade > 70)
+        .GroupBy(s => s.Gender)
+        .Select(g => new
+        {
+          Gender = g.Key,
+          Students = g.OrderByDescending(s => s.Grade)
+        });
     }
 }
