@@ -6,8 +6,9 @@ class Program
     {
         Console.Write("Enter a positive integer: ");
         string input = Console.ReadLine();
+        bool result = int.TryParse(input, out int number);
 
-        if (int.TryParse(input, out int number) && number >= 0)
+        if (result && number >= 0)
         {
             long factorial = CalculateFactorial(number);
             Console.WriteLine($"Factorial of {number} is: {factorial}");
