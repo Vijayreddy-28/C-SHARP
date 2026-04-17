@@ -1,54 +1,48 @@
 using System;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 
 class Program
 {
     static async Task Main()
     {
-        Console.WriteLine("Starting async operations...\n");
+        Console.WriteLine("Processing customer orders...\n");
 
         try
         {
-            // Start multiple async tasks concurrently
-            Task<string> task1 = FetchDataFromSource("Source 1", 2000);
-            Task<string> task2 = FetchDataFromSource("Source 2", 3000);
-            Task<string> task3 = FetchDataFromSource("Source 3", 1500);
+            Task<string> order1 = ProcessOrder("Order 101", 2000);
+            Task<string> order2 = ProcessOrder("Order 102", 3000);
+            Task<string> order3 = ProcessOrder("Order 103", 1500);
 
-            // Wait for all tasks to complete
-            string[] results = await Task.WhenAll(task1, task2, task3);
+            string[] results = await Task.WhenAll(order1, order2, order3);
 
-            // Aggregate results
-            Console.WriteLine("\n--- Results ---");
-            foreach (string result in results)
+            Console.WriteLine("\n--- Order Results ---");
+            foreach (var result in results)
             {
                 Console.WriteLine(result);
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error occurred: {ex.Message}");
+            Console.WriteLine($"Error: {ex.Message}");
         }
 
-        Console.WriteLine("\nAll operations completed.");
+        Console.WriteLine("\nAll orders processed.");
     }
 
-    // Simulated async method (like API call)
-    static async Task<string> FetchDataFromSource(string sourceName, int delay)
+    static async Task<string> ProcessOrder(string orderId, int delay)
     {
-        Console.WriteLine($"{sourceName} started...");
+        Console.WriteLine($"{orderId} processing...");
 
-        // Simulate delay (like network/API call)
-        await Task.Delay(delay);
+        await Task.Delay(delay); // simulate DB/payment/API call
 
-        // Simulate an error for demonstration
-        if (sourceName == "Source 2")
+        // Simulate failure
+        if (orderId == "Order 102")
         {
-            throw new Exception($"{sourceName} failed!");
+            throw new Exception($"{orderId} payment failed!");
         }
 
-        Console.WriteLine($"{sourceName} completed.");
+        Console.WriteLine($"{orderId} completed.");
 
-        return $"{sourceName}: Data fetched successfully";
+        return $"{orderId}: Successfully processed";
     }
-} 
+}
