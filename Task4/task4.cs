@@ -14,48 +14,68 @@ class Program
 {
     static void Main()
     {
-        // Create and populate list
-        List<Student> students = new List<Student>
-        {
-        new Student { Name = "Alice", Grade = 85, Age = 20, Gender = "Female" },
-        new Student { Name = "Bob", Grade = 72, Age = 21, Gender = "Male" },
-        new Student { Name = "Charlie", Grade = 90, Age = 19, Gender = "Male" },
-        new Student { Name = "David", Grade = 65, Age = 22, Gender = "Male" },
-        new Student { Name = "Eve", Grade = 88, Age = 20, Gender = "Female" }
-    };
+        List<Student> students = new List<Student>();
 
-        Console.Write("Enter minimum grade: ");
+        Console.Write("Enter number of students: ");
+        int count = int.Parse(Console.ReadLine());
+
+        // 🔹 Dynamic input
+        for (int i = 0; i < count; i++)
+        {
+            Console.WriteLine($"\nEnter details for student {i + 1}:");
+
+            Console.Write("Name: ");
+            string name = Console.ReadLine();
+
+            Console.Write("Grade: ");
+            int grade = int.Parse(Console.ReadLine());
+
+            Console.Write("Age: ");
+            int age = int.Parse(Console.ReadLine());
+
+            Console.Write("Gender: ");
+            string gender = Console.ReadLine();
+
+            students.Add(new Student
+            {
+                Name = name,
+                Grade = grade,
+                Age = age,
+                Gender = gender
+            });
+        }
+
+        // 🔹 Threshold input
+        Console.Write("\nEnter minimum grade (threshold): ");
         int threshold = int.Parse(Console.ReadLine());
 
-        // LINQ: Filter + Sort
-        var filteredStudents = students
-            .Where(s => s.Grade > threshold)  
-            .OrderBy(s => s.Name);  
-        // Display results
+        // 🔹 Filter based on threshold
+        var filtered = students.Where(s => s.Grade >= threshold);
+
+        // 🔹 Sorting choice
+        Console.WriteLine("Sort by: name / grade / age");
+        string choice = Console.ReadLine().ToLower();
+
+        IEnumerable<Student> result = filtered;
+
+        if (choice == "name")
+        {
+            result = filtered.OrderBy(s => s.Name);
+        }
+        else if (choice == "grade")
+        {
+            result = filtered.OrderByDescending(s => s.Grade);
+        }
+        else if (choice == "age")
+        {
+            result = filtered.OrderBy(s => s.Age);
+        }
+
+        // 🔹 Output
         Console.WriteLine("\n--- Filtered & Sorted Students ---");
-
-        foreach (var student in filteredStudents)
+        foreach (var s in result)
         {
-            Console.WriteLine($"Name: {student.Name}, Grade: {student.Grade}, Age: {student.Age}");
+            Console.WriteLine($"{s.Name} | Grade: {s.Grade} | Age: {s.Age} | {s.Gender}");
         }
-
-
-        var topStudents = students
-        .OrderByDescending(s => s.Grade)
-        .Take(3);
-        Console.WriteLine("top 3 students");
-        foreach (var s in topStudents)
-        {
-        Console.WriteLine($"{s.Name} - {s.Grade}");
-        }
-
-        var result = students
-        .Where(s => s.Grade > 70)
-        .GroupBy(s => s.Gender)
-        .Select(g => new
-        {
-          Gender = g.Key,
-          Students = g.OrderByDescending(s => s.Grade)
-        });
     }
 }
