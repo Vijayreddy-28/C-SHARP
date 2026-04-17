@@ -13,3 +13,16 @@
 - Makes code flexible and scalable
 - Helps in Dependency Injection
 - Makes testing easier
+
+### Purpose of Generics
+
+- Generics allow you to write type-independent code
+- Same code works for int, string, object, custom classes, etc.
+- Helps avoid code duplication
+- Provides type safety at compile time
+
+### Output
+
+![output](images/1.png)
+![output](images/2.png)
+![output](images/3.png)
