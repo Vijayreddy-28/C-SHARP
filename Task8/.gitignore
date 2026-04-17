@@ -1,1 +1,4 @@
 .csproj
+obj/
+Task1/
+.vscode/
