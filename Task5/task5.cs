@@ -5,40 +5,37 @@ class Program
 {
     static void Main()
     {
-        string inputFile = "Task5/sample_data1.csv";   // changed to CSV
-        string outputFile = "Task5/output.txt";
+        Console.Write("Enter file path: ");
+        string inputFile = Console.ReadLine();
 
         try
         {
-            // Read all lines from CSV
             string[] lines = File.ReadAllLines(inputFile);
 
             int lineCount = lines.Length;
             int wordCount = 0;
 
-            // Process CSV data
             foreach (string line in lines)
             {
-                // Split by comma (CSV columns)
-                string[] cells = line.Split(',');
-
-                foreach (string cell in cells)
-                {
-                    wordCount += CountWords(cell);
-                }
+                wordCount += CountWords(line);
             }
 
-            // Prepare result
-            string result = $"Lines: {lineCount}\nWords: {wordCount}";
+            // 🔹 Simple path (no complex logic)
+            string outputFolder = "Task5";
+            Directory.CreateDirectory(outputFolder); // ensure folder exists
 
-            // Write to output file
+            string fileName = Path.GetFileNameWithoutExtension(inputFile);
+            string outputFile = Path.Combine(outputFolder, fileName + "_output.txt");
+
+            string result = $"Lines: {lineCount}\nWords: {wordCount}";
             File.WriteAllText(outputFile, result);
 
-            Console.WriteLine("CSV Processing complete. Results written to output.txt");
+            Console.WriteLine($"Lines: {lineCount}");
+            Console.WriteLine($"Words: {wordCount}");
         }
-        catch (FileNotFoundException)
+         catch (FileNotFoundException)
         {
-            Console.WriteLine("Error: CSV file not found.");
+            Console.WriteLine("Error: File not found.");
         }
         catch (IOException ex)
         {
@@ -46,16 +43,13 @@ class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Unexpected Error: {ex.Message}");
+            Console.WriteLine($"Error: {ex.Message}");
         }
     }
 
     static int CountWords(string text)
     {
-        char[] separators = { ' ', '\n', '\r', '\t', '.', '!', '?' };
-
-        string[] words = text.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-
-        return words.Length;
+        char[] separators = { ' ', '\n', '\r', '\t', '.', ',', '!', '?' };
+        return text.Split(separators, StringSplitOptions.RemoveEmptyEntries).Length;
     }
 }
