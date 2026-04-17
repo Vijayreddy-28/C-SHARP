@@ -21,7 +21,7 @@ class Counter
     {
         _count++;
 
-        Console.WriteLine($"Current Count: {_count}");
+        Console.WriteLine($"Current temperature: {_count}");
 
         // Raise event when threshold reached
         if (_count == _threshold)
@@ -40,36 +40,37 @@ class Counter
 class Program
 {
     static void Main()
-    {
-        Counter counter = new Counter(5);
+    {    
+        Console.Write("Enter temperature threshold: ");
+        int threshold = int.Parse(Console.ReadLine());
+
+        Counter counter = new Counter(threshold);
 
         // Step 4: Subscribe event handlers
-        counter.ThresholdReached += Alert;
-        counter.ThresholdReached += Log;
-        counter.ThresholdReached += Congratulate;
+        counter.ThresholdReached += ShowWarning;
+        counter.ThresholdReached += ShowTime;
+        counter.ThresholdReached += Notify;
 
         // Step 5: Main loop
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < threshold; i++)
         {
             counter.Increment();
-            System.Threading.Thread.Sleep(500);
         }
     }
 
-    // Event Handlers (Consumers)
 
-    static void Alert(int value)
+    static void ShowWarning(int value)
     {
-        Console.WriteLine($"[ALERT] Threshold reached at {value}!");
+    Console.WriteLine($"⚠️ Warning: Temperature reached {value}");
     }
 
-    static void Log(int value)
+    static void ShowTime(int value)
     {
-        Console.WriteLine($"[LOG] Counter hit value: {value}");
+    Console.WriteLine($"Reached at time: {DateTime.Now:T}");
     }
 
-    static void Congratulate(int value)
+    static void Notify(int value)
     {
-        Console.WriteLine($"🎉 Congratulations! You reached {value}!");
+    Console.WriteLine("⚠️ Users, please do not use the machine. Try again after some time.");
     }
 }
